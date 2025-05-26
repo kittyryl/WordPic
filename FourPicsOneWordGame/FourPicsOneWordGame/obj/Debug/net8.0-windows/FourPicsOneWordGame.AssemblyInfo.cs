@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FourPicsOneWordGame")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a8510dcb5cffa9daec22932ee2dd7ded0f093a90")]
 [assembly: System.Reflection.AssemblyProductAttribute("FourPicsOneWordGame")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FourPicsOneWordGame")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

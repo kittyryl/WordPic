@@ -5,13 +5,13 @@ using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using FourPicsOneWordGame.Models; // For UserRole if you were to use it, not strictly needed here
+using FourPicsOneWordGame.Models;
 using MySql.Data.MySqlClient;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
-using LiveChartsCore.SkiaSharpView.WinForms; // For specific WinForms types if needed
-using SkiaSharp; // For SKColors
+using LiveChartsCore.SkiaSharpView.WinForms;
+using SkiaSharp;
 
 namespace FourPicsOneWordGame
 {
@@ -39,12 +39,9 @@ namespace FourPicsOneWordGame
                 return;
             }
 
-            // Clear previous chart data and setup
             cartesianChartTopPlayers.Series = Enumerable.Empty<ISeries>();
             cartesianChartTopPlayers.XAxes = new[] { new Axis { IsVisible = false } };
             cartesianChartTopPlayers.YAxes = new[] { new Axis { IsVisible = false } };
-            // For LiveCharts2, titles are often managed differently or via a specific Title component/property if available,
-            // or by adding a Label control above the chart.
 
             try
             {
@@ -54,7 +51,6 @@ namespace FourPicsOneWordGame
                 {
                     await connection.OpenAsync();
 
-                    // 1. Get Total Puzzles
                     string puzzlesQuery = "SELECT COUNT(*) FROM gamelevels;";
                     using (var puzzlesCmd = new MySqlCommand(puzzlesQuery, connection))
                     {
@@ -62,7 +58,6 @@ namespace FourPicsOneWordGame
                         lblTotalPuzzles.Text = $"Total Puzzles: {puzzlesResult?.ToString() ?? "0"}";
                     }
 
-                    // 2. Get Total Players
                     string playersQuery = "SELECT COUNT(*) FROM users;";
                     using (var playersCmd = new MySqlCommand(playersQuery, connection))
                     {
@@ -70,7 +65,6 @@ namespace FourPicsOneWordGame
                         lblTotalPlayers.Text = $"Total Players: {playersResult?.ToString() ?? "0"}";
                     }
 
-                    // 3. Get Average Score
                     string avgScoreQuery = "SELECT AVG(Score) FROM userprogresses WHERE IsCompleted = 1;";
                     using (var avgScoreCmd = new MySqlCommand(avgScoreQuery, connection))
                     {
@@ -85,7 +79,6 @@ namespace FourPicsOneWordGame
                         }
                     }
 
-                    // 4. Get Data for Top Players Chart
                     string topPlayersQuery = @"
                         SELECT 
                             u.Username, 
@@ -95,7 +88,7 @@ namespace FourPicsOneWordGame
                         WHERE up.IsCompleted = 1
                         GROUP BY u.UserId, u.Username
                         ORDER BY TotalScore DESC
-                        LIMIT 5;"; // Get Top 5 players
+                        LIMIT 5;";
 
                     using (var topPlayersCmd = new MySqlCommand(topPlayersQuery, connection))
                     {
@@ -110,9 +103,7 @@ namespace FourPicsOneWordGame
                             }
                         }
                     }
-                } // Connection is closed here
-
-                // --- Populate LiveCharts2 CartesianChart ---
+                }
                 if (topPlayersData.Any())
                 {
                     cartesianChartTopPlayers.Series = new ISeries[]
@@ -121,17 +112,17 @@ namespace FourPicsOneWordGame
                         {
                             Name = "Total Score",
                             Values = topPlayersData.Select(tp => tp.Item2).ToArray(),
-                            DataLabelsPaint = new SolidColorPaint(SKColors.Black), // Changed to Black for visibility on default bar colors
-                            DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Top, // Position on top of bar
+                            DataLabelsPaint = new SolidColorPaint(SKColors.Black),
+                            DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Top,
                             DataLabelsFormatter = (chartPoint) =>
                             {
-                                if (chartPoint.Model is long scoreValue) // Access value via Model
+                                if (chartPoint.Model is long scoreValue)
                                 {
                                     return scoreValue.ToString("N0");
                                 }
                                 return string.Empty;
                             },
-                            Fill = new SolidColorPaint(SKColors.CornflowerBlue), // Example bar color
+                            Fill = new SolidColorPaint(SKColors.CornflowerBlue),
                             Stroke = null
                         }
                     };
@@ -144,7 +135,7 @@ namespace FourPicsOneWordGame
                             Labels = topPlayersData.Select(tp => tp.Item1).ToArray(),
                             LabelsRotation = (topPlayersData.Count > 3) ? -45 : 0,
                             TextSize = 10,
-                            NameTextSize = 12, // Font size for "Player" axis title
+                            NameTextSize = 12,
                             NamePaint = new SolidColorPaint(SKColors.Black),
                             LabelsPaint = new SolidColorPaint(SKColors.DarkSlateGray),
                             SeparatorsPaint = new SolidColorPaint(SKColors.LightGray) { StrokeThickness = 0.5f }
@@ -164,19 +155,14 @@ namespace FourPicsOneWordGame
                             SeparatorsPaint = new SolidColorPaint(SKColors.LightGray) { StrokeThickness = 0.5f }
                         }
                     };
-                    // You can add a chart title using a separate Label or by exploring LiveCharts title visual components if needed.
-                    // Example using a Form Label:
-                    // lblDashboardTitle.Text = "Admin Dashboard - Top Player Scores"; 
                 }
                 else
                 {
-                    // Handle no data for chart (show an empty state or message)
                     cartesianChartTopPlayers.Series = new ISeries[] {
                         new ColumnSeries<long> { Name = "Total Score", Values = new long[] {} }
                     };
                     cartesianChartTopPlayers.XAxes = new[] { new Axis { Name = "Player", Labels = new[] { "No Player Data" } } };
                     cartesianChartTopPlayers.YAxes = new[] { new Axis { Name = "Total Score", MinLimit = 0 } };
-                    // lblDashboardTitle.Text = "Admin Dashboard - No Player Data";
                 }
             }
             catch (MySqlException ex)
@@ -185,7 +171,6 @@ namespace FourPicsOneWordGame
                 lblTotalPuzzles.Text = "Total Puzzles: Error";
                 lblTotalPlayers.Text = "Total Players: Error";
                 lblAverageScore.Text = "Average Score: Error";
-                // Optionally display an error message on the chart itself
             }
             catch (Exception ex)
             {

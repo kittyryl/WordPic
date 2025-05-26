@@ -62,7 +62,6 @@ namespace FourPicsOneWordGame
 
                             dgvUsers.DataSource = usersTable;
 
-                            // Customize DataGridView column headers and visibility
                             if (dgvUsers.Columns["UserId"] != null)
                             {
                                 dgvUsers.Columns["UserId"].HeaderText = "ID";
@@ -78,9 +77,9 @@ namespace FourPicsOneWordGame
                                 dgvUsers.Columns["RoleText"].HeaderText = "Role";
                                 dgvUsers.Columns["RoleText"].Width = 100;
                             }
-                            if (dgvUsers.Columns["Role"] != null) // The original integer Role column
+                            if (dgvUsers.Columns["Role"] != null) 
                             {
-                                dgvUsers.Columns["Role"].Visible = false; // Hide the raw integer Role
+                                dgvUsers.Columns["Role"].Visible = false; 
                             }
                         }
                     }
@@ -162,7 +161,7 @@ namespace FourPicsOneWordGame
 
             if (confirmResult == DialogResult.No)
             {
-                return; // User cancelled
+                return; 
             }
 
             try
@@ -223,7 +222,7 @@ namespace FourPicsOneWordGame
                 "This action cannot be undone.",
                 "Confirm User Deletion",
                 MessageBoxButtons.YesNo,
-                MessageBoxIcon.Stop, // Use a more severe icon like Stop or Exclamation
+                MessageBoxIcon.Stop,
                 MessageBoxDefaultButton.Button2);
 
             if(confirmResult == DialogResult.Yes)

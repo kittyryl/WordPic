@@ -30,7 +30,7 @@ namespace FourPicsOneWordGame
                 btnManageLevels.Visible = false;
 
                 btnManageLevels.Visible = false;
-                if (this.Controls.ContainsKey("btnManageUsers")) // If you have a manage users button
+                if (this.Controls.ContainsKey("btnManageUsers")) 
                 {
                     this.Controls["btnManageUsers"].Visible = false;
                 }
@@ -70,8 +70,6 @@ namespace FourPicsOneWordGame
                 this.Close();
             }
 
-            //lblWelcomeMessage.Parent = pictureBox1;
-            //lblWelcomeMessage.BackColor = Color.Transparent;
         }
 
         private void btnLogout_Click(object sender, EventArgs e)

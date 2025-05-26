@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Data;
 using System.Drawing;
-using System.Linq; // Not strictly needed with DataTable iteration here, but good practice
+using System.Linq; 
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using FourPicsOneWordGame.Models; // For CurrentUser
+using FourPicsOneWordGame.Models;
 using MySql.Data.MySqlClient;
 
 namespace FourPicsOneWordGame
@@ -21,7 +21,7 @@ namespace FourPicsOneWordGame
             await LoadAllProgressDataAsync();
         }
 
-        private void btnClose_Click(object sender, EventArgs e) // Assuming your close button is named btnClose
+        private void btnClose_Click(object sender, EventArgs e) 
         {
             this.Close();
         }
@@ -31,7 +31,7 @@ namespace FourPicsOneWordGame
             if (CurrentUser.LoggedInUser == null)
             {
                 MessageBox.Show("No user is logged in. Cannot display progress.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                if (lblTitle != null) lblTitle.Text = "My Progress"; // Check if lblTitle exists
+                if (lblTitle != null) lblTitle.Text = "My Progress"; 
 
                 Control? overallScoreCtrl = this.Controls.Find("lblOverallTotalScore", true).FirstOrDefault();
                 if (overallScoreCtrl is Label overallScoreLabel)
@@ -61,7 +61,6 @@ namespace FourPicsOneWordGame
                 {
                     await connection.OpenAsync();
 
-                    // 1. Fetch Total Score
                     string totalScoreQuery = "SELECT SUM(Score) FROM userprogresses WHERE UserId = @UserId AND IsCompleted = 1;";
                     using (var scoreCmd = new MySqlCommand(totalScoreQuery, connection))
                     {
@@ -80,7 +79,6 @@ namespace FourPicsOneWordGame
                     }
 
 
-                    // 2. Fetch Detailed Progress for the list
                     string detailsQuery = @"SELECT 
                                             gl.GameLevelId, 
                                             gl.CorrectWord AS Word, 
@@ -99,9 +97,8 @@ namespace FourPicsOneWordGame
                             await Task.Run(() => adapter.Fill(progressDetailsTable));
                         }
                     }
-                } // Connection is closed here
+                } 
 
-                // --- Create and Add Header Panel for Progress ---
                 if (progressDetailsTable.Rows.Count > 0 && flpProgressEntries != null)
                 {
                     Panel headerPanelProgress = new Panel
@@ -112,14 +109,13 @@ namespace FourPicsOneWordGame
                         BackColor = Color.FromArgb(220, 220, 220)
                     };
 
-                    // Define X positions for alignment for header
                     int xPosHeaderLevel = 10;
                     int xPosHeaderWord = 70;
-                    int widthForWord = 150; // Example width
+                    int widthForWord = 150;
                     int xPosHeaderScore = xPosHeaderWord + widthForWord + 10;
                     int widthForScore = 80;
                     int xPosHeaderDate = xPosHeaderScore + widthForScore + 10;
-                    int widthForDate = Math.Max(120, headerPanelProgress.Width - xPosHeaderDate - 10); // Remaining width for date
+                    int widthForDate = Math.Max(120, headerPanelProgress.Width - xPosHeaderDate - 10);
 
 
                     Label lblHeaderLevel = new Label { Text = "Level", Font = new Font("Segoe UI", 9F, FontStyle.Bold), Location = new Point(xPosHeaderLevel, 7), AutoSize = true, ForeColor = Color.Black };
@@ -133,9 +129,7 @@ namespace FourPicsOneWordGame
                     headerPanelProgress.Controls.Add(lblHeaderDate);
                     flpProgressEntries.Controls.Add(headerPanelProgress);
                 }
-                // --- End of Header Panel ---
 
-                // --- Dynamically Create and Add Progress Entry Controls ---
                 if (progressDetailsTable.Rows.Count > 0 && flpProgressEntries != null)
                 {
                     int playerLevelCounter = 1;
@@ -150,12 +144,11 @@ namespace FourPicsOneWordGame
                             BackColor = (playerLevelCounter % 2 == 0) ? Color.FromArgb(248, 248, 248) : Color.White
                         };
 
-                        // Define X positions for alignment (should match header positions)
                         int xPosLevel = 10;
                         int xPosWord = 70;
-                        int widthForWord = 150; // Consistent with header
+                        int widthForWord = 150;
                         int xPosScore = xPosWord + widthForWord + 10;
-                        int widthForScore = 80; // Consistent with header
+                        int widthForScore = 80;
                         int xPosDate = xPosScore + widthForScore + 10;
                         int widthForDate = Math.Max(120, entryPanel.Width - xPosDate - 10);
 
@@ -173,7 +166,7 @@ namespace FourPicsOneWordGame
                         flpProgressEntries.Controls.Add(entryPanel);
                     }
                 }
-                else if (flpProgressEntries != null) // No data
+                else if (flpProgressEntries != null) 
                 {
                     Label lblNoData = new Label
                     {
@@ -207,13 +200,5 @@ namespace FourPicsOneWordGame
                 }
             }
         }
-
-        // You will need to add the btnClose_Click event handler if it's not already generated
-        // by double-clicking the button in the designer.
-        // If you named your button btnClose on the form:
-        // private void btnClose_Click(object sender, EventArgs e)
-        // {
-        //     this.Close();
-        // }
     }
 }

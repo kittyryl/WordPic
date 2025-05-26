@@ -36,7 +36,7 @@ namespace FourPicsOneWordGame
 
                             DataColumn displayLevelCol = new DataColumn("DisplayLevel", typeof(int));
                             gameLevelsTable.Columns.Add(displayLevelCol);
-                            displayLevelCol.SetOrdinal(0); // Make it the first column
+                            displayLevelCol.SetOrdinal(0);
 
                             for (int i = 0; i < gameLevelsTable.Rows.Count; i++)
                             {
@@ -77,7 +77,6 @@ namespace FourPicsOneWordGame
 
         private async void btnAddLevel_Click(object sender, EventArgs e)
         {
-            // Basic Validations
             if (string.IsNullOrWhiteSpace(txtCorrectWord.Text) ||
                 string.IsNullOrWhiteSpace(txtImagePath1.Text) ||
                 string.IsNullOrWhiteSpace(txtImagePath2.Text) ||
@@ -187,14 +186,12 @@ namespace FourPicsOneWordGame
 
         private async void btnSaveChanges_Click(object sender, EventArgs e)
         {
-            // Validate a level is selected
             if (string.IsNullOrWhiteSpace(lblEditingGameLevelId.Text) || !int.TryParse(lblEditingGameLevelId.Text, out int gameLevelId))
             {
                 MessageBox.Show("Please select a level from the grid to edit.", "Selection Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Basic validation
             if (string.IsNullOrWhiteSpace(txtCorrectWord.Text) ||
                string.IsNullOrWhiteSpace(txtImagePath1.Text) ||
                string.IsNullOrWhiteSpace(txtImagePath2.Text) ||
@@ -206,7 +203,6 @@ namespace FourPicsOneWordGame
                 return;
             }
 
-            // Get updated values from input fields
             string correctWord = txtCorrectWord.Text.Trim();
             string imagePath1 = txtImagePath1.Text.Trim();
             string imagePath2 = txtImagePath2.Text.Trim();

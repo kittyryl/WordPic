@@ -1,123 +1,63 @@
 ﻿using System;
-
 using System.Collections.Generic;
-
 using System.Drawing;
-
 using System.IO;
-
 using System.Linq;
-
 using System.Threading.Tasks;
-
 using System.Windows.Forms;
-
 using FourPicsOneWordGame.Models;
-
 using MySql.Data.MySqlClient;
 
-
-
 namespace FourPicsOneWordGame
-
 {
-
     public partial class GamePlayForm : Form
-
     {
-
         private GameLevel? _currentLevel;
-
         private string _baseImagePath;
-
-
-
         private List<Label> _answerSlots = new List<Label>();
-
         private List<Button> _letterBankButtons = new List<Button>();
-
         private const int TOTAL_BANK_LETTERS = 14;
-
-
-
         private const int MAX_HINTS_PER_LEVEL = 2;
-
         private int _hintsUsedThisLevel = 0;
-
-
-
         private int _playerLevelCounter = 1;
-
         private long _currentTotalScore = 0;
-
         private int _wrongGuessesThisLevel = 0;
-
         private int _pointsEarnedThisLevelAttempt = 0;
-
-
-
         public GamePlayForm()
-
         {
-
             InitializeComponent();
-
             _baseImagePath = Path.Combine(Application.StartupPath, "Images");
-
         }
-
-
 
         private async void GamePlayForm_Load(object sender, EventArgs e)
-
         {
-
-            _playerLevelCounter = 1; // Reset for new game session
-
-            await FetchInitialTotalScoreAsync(); // Load score from previously completed levels
-
+            _playerLevelCounter = 1;
+            await FetchInitialTotalScoreAsync();
             await LoadAndDisplayNextLevelAsync();
-
         }
 
-
-
         private async Task FetchInitialTotalScoreAsync()
-
         {
-
             if (CurrentUser.LoggedInUser == null)
-
             {
-
                 _currentTotalScore = 0;
-
                 UpdateTotalScoreDisplay();
-
                 return;
-
             }
 
             int userId = CurrentUser.LoggedInUser.UserId;
-
             long scoreFromDb = 0;
 
             try
-
             {
-
                 using (var connection = new MySqlConnection(DbHelper.ConnectionString))
-
                 {
-
                     await connection.OpenAsync();
 
                     string query = "SELECT SUM(Score) FROM userprogresses WHERE UserId = @UserId AND IsCompleted = 1;";
 
                     using (var command = new MySqlCommand(query, connection))
-
                     {
-
                         command.Parameters.AddWithValue("@UserId", userId);
 
                         object? result = await command.ExecuteScalarAsync();
@@ -158,7 +98,7 @@ namespace FourPicsOneWordGame
 
         {
 
-            if (this.Controls.ContainsKey("lblGameTotalScore")) // Make sure this Label exists on your form
+            if (this.Controls.ContainsKey("lblGameTotalScore"))
 
             {
 
@@ -178,11 +118,11 @@ namespace FourPicsOneWordGame
 
             _currentLevel = null;
 
-            _hintsUsedThisLevel = 0;       // Reset for the new level
+            _hintsUsedThisLevel = 0; 
 
-            _wrongGuessesThisLevel = 0;  // Reset for the new level
+            _wrongGuessesThisLevel = 0;
 
-            _pointsEarnedThisLevelAttempt = 10; // Base score for a new level attempt
+            _pointsEarnedThisLevelAttempt = 10;
 
 
 
@@ -211,10 +151,6 @@ namespace FourPicsOneWordGame
                 {
 
                     await connection.OpenAsync();
-
-                    // Query to get the next level NOT marked as IsCompleted = 1 for this user,
-
-                    // and also fetch HintsUsedInAttempt if an in-progress (IsCompleted = 0) record exists.
 
                     string query = @"
                     SELECT 
@@ -286,8 +222,6 @@ namespace FourPicsOneWordGame
 
                                 {
 
-                                    // An in-progress record exists (IsCompleted would be 0 or NULL here, not 1).
-
                                     if (!reader.IsDBNull(reader.GetOrdinal("HintsUsedInAttempt")))
 
                                     {
@@ -295,9 +229,6 @@ namespace FourPicsOneWordGame
                                         _hintsUsedThisLevel = reader.GetInt32(reader.GetOrdinal("HintsUsedInAttempt"));
 
                                     }
-
-                                    // else _hintsUsedThisLevel remains its default 0.
-
 
 
                                     if (!reader.IsDBNull(reader.GetOrdinal("PersistedAttemptScore")))
@@ -308,11 +239,6 @@ namespace FourPicsOneWordGame
 
                                     }
 
-                                    // else _pointsEarnedThisLevelAttempt remains its default 10.
-
-
-
-                                    // Load persisted wrong guesses IF THE COLUMN EXISTS AND HAS DATA
 
                                     if (!reader.IsDBNull(reader.GetOrdinal("WrongGuessesInAttempt")))
 
@@ -322,7 +248,6 @@ namespace FourPicsOneWordGame
 
                                     }
 
-                                    // else _wrongGuessesThisLevel remains its default 0.
 
                                 }
 
@@ -340,7 +265,7 @@ namespace FourPicsOneWordGame
 
                 {
 
-                    DisplayLevelInfo(); // This will call EnableGameControls
+                    DisplayLevelInfo();
 
                 }
 
@@ -380,11 +305,11 @@ namespace FourPicsOneWordGame
 
                             _currentTotalScore = 0;
 
-                            _pointsEarnedThisLevelAttempt = 0; // Should be reset by LoadAndDisplayNextLevelAsync
+                            _pointsEarnedThisLevelAttempt = 0;
 
                             UpdateTotalScoreDisplay();
 
-                            await LoadAndDisplayNextLevelAsync(); // Reload first level
+                            await LoadAndDisplayNextLevelAsync(); 
 
                         }
 
@@ -630,7 +555,6 @@ namespace FourPicsOneWordGame
 
 
 
-                // Correctly set hint button state
 
                 if (btnShowHint != null) btnShowHint.Enabled = (_hintsUsedThisLevel < MAX_HINTS_PER_LEVEL);
 
@@ -744,7 +668,6 @@ namespace FourPicsOneWordGame
 
         {
 
-            // You can leave this empty if you don't want any action on click
 
         }
 
@@ -772,11 +695,10 @@ namespace FourPicsOneWordGame
 
                 await UpdateUserProgressAsync(Math.Max(_pointsEarnedThisLevelAttempt, 1));
 
-                // Pass score for this level
 
                 _playerLevelCounter++;
 
-                await FetchInitialTotalScoreAsync(); // Refresh total score from DB
+                await FetchInitialTotalScoreAsync(); 
 
 
 
@@ -794,7 +716,7 @@ namespace FourPicsOneWordGame
 
             }
 
-            else // Incorrect Answer
+            else
 
             {
 
@@ -810,9 +732,6 @@ namespace FourPicsOneWordGame
 
                 if (_pointsEarnedThisLevelAttempt < 0) _pointsEarnedThisLevelAttempt = 0;
 
-                // Don't update _currentTotalScore or its display here for just a wrong guess on current level.
-
-                // User sees penalty via message and potential score for *this* level.
 
 
 
@@ -842,9 +761,9 @@ namespace FourPicsOneWordGame
 
                             _currentTotalScore = 0;
 
-                            _pointsEarnedThisLevelAttempt = 0; // Reset this as well
+                            _pointsEarnedThisLevelAttempt = 0; 
 
-                            UpdateTotalScoreDisplay(); // Show 0 total score
+                            UpdateTotalScoreDisplay(); 
 
                         }
 
@@ -914,7 +833,7 @@ namespace FourPicsOneWordGame
 
             foreach (Button btn in _letterBankButtons) { btn.Enabled = false; }
 
-            btnShowHint.Enabled = false; // When game controls are generally disabled, hint button is too.
+            btnShowHint.Enabled = false;
 
         }
 
@@ -1010,7 +929,6 @@ namespace FourPicsOneWordGame
 
                     slotToFill.Text = letterToReveal.ToString();
 
-                    // slotToFill.Tag = bankButtonUsedForReveal;
 
                     slotToFill.Tag = "HINT_REVEALED";
 
@@ -1050,7 +968,7 @@ namespace FourPicsOneWordGame
 
                 Random random = new Random();
 
-                availableBankButtonsForRemoval = availableBankButtonsForRemoval.OrderBy(x => random.Next()).ToList(); // Shuffle
+                availableBankButtonsForRemoval = availableBankButtonsForRemoval.OrderBy(x => random.Next()).ToList();
 
 
 
@@ -1074,7 +992,7 @@ namespace FourPicsOneWordGame
 
                     {
 
-                        if (i < _answerSlots.Count && (string.IsNullOrEmpty(_answerSlots[i].Text) || _answerSlots[i].Text == "_")) // If slot is empty
+                        if (i < _answerSlots.Count && (string.IsNullOrEmpty(_answerSlots[i].Text) || _answerSlots[i].Text == "_"))
 
                         {
 
@@ -1114,7 +1032,7 @@ namespace FourPicsOneWordGame
 
                                 {
 
-                                    isPartOfRemainingAnswer = true; // It's needed.
+                                    isPartOfRemainingAnswer = true;
 
                                 }
 
@@ -1182,7 +1100,7 @@ namespace FourPicsOneWordGame
 
                 else
 
-                    _pointsEarnedThisLevelAttempt = 1; // Clamp minimum score
+                    _pointsEarnedThisLevelAttempt = 1;
 
 
 
@@ -1254,24 +1172,6 @@ namespace FourPicsOneWordGame
 
                     await connection.OpenAsync();
 
-                    // Modified Query:
-
-                    // When updating a duplicate key (meaning the userprogress row already exists,
-
-                    // likely from a hint or a previous unfinished attempt),
-
-                    // we will now unconditionally set IsCompleted=1, CompletedDate=NOW(), and Score=@Score.
-
-                    // This assumes that if UpdateUserProgressAsync is called, the current game logic
-
-                    // has determined the level is now complete with the score 'scoreAchievedForThisLevel'.
-
-                    // The LoadAndDisplayNextLevelAsync logic is responsible for preventing already completed
-
-                    // levels from being re-played and re-triggering this (unless progress is reset).
-
-                    // Reset hints used for this attempt as level is complete
-
                     string query = "INSERT INTO userprogresses (UserId, GameLevelId, IsCompleted, CompletedDate, Score, HintsUsedInAttempt) VALUES (@UserId, @GameLevelId, 1, NOW(), @Score, 0) ON DUPLICATE KEY UPDATE IsCompleted = 1, CompletedDate = NOW(), Score = @Score, HintsUsedInAttempt = 0;";
 
 
@@ -1283,7 +1183,7 @@ namespace FourPicsOneWordGame
 
                         command.Parameters.AddWithValue("@GameLevelId", gameLevelId);
 
-                        command.Parameters.AddWithValue("@Score", scoreAchievedForThisLevel); // This is Math.Max(_pointsEarnedThisLevelAttempt, 1)
+                        command.Parameters.AddWithValue("@Score", scoreAchievedForThisLevel);
 
                         int rowsAffected = await command.ExecuteNonQueryAsync();
 
@@ -1367,7 +1267,7 @@ namespace FourPicsOneWordGame
 
 
 
-        private void button1_Click(object sender, EventArgs e) // Assuming this is btnBackToMenu
+        private void button1_Click(object sender, EventArgs e)
 
         {
 
@@ -1416,7 +1316,7 @@ namespace FourPicsOneWordGame
 
                         command.Parameters.AddWithValue("@CurrentHintsUsed", _hintsUsedThisLevel);
 
-                        command.Parameters.AddWithValue("@CurrentWrongGuesses", _wrongGuessesThisLevel); // Pass current wrong guesses
+                        command.Parameters.AddWithValue("@CurrentWrongGuesses", _wrongGuessesThisLevel); 
 
                         command.Parameters.AddWithValue("@CurrentAttemptScore", _pointsEarnedThisLevelAttempt);
 

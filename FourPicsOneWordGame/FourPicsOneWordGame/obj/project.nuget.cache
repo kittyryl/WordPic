@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "FNJGoLgD9vI=",
+  "dgSpecHash": "rZ0fpP+Ui1k=",
   "success": true,
-  "projectFilePath": "C:\\Users\\dhary\\Music\\FourPicsOneWordGame(new)\\FourPicsOneWordGame\\FourPicsOneWordGame.csproj",
+  "projectFilePath": "C:\\Users\\dhary\\Music\\WordPic\\FourPicsOneWordGame\\FourPicsOneWordGame\\FourPicsOneWordGame.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dhary\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\dhary\\.nuget\\packages\\bouncycastle.cryptography\\2.5.1\\bouncycastle.cryptography.2.5.1.nupkg.sha512",
@@ -57,9 +57,9 @@
       "code": "NU1701",
       "level": "Warning",
       "message": "Package 'OpenTK 3.1.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.",
-      "projectPath": "C:\\Users\\dhary\\Music\\FourPicsOneWordGame(new)\\FourPicsOneWordGame\\FourPicsOneWordGame.csproj",
+      "projectPath": "C:\\Users\\dhary\\Music\\WordPic\\FourPicsOneWordGame\\FourPicsOneWordGame\\FourPicsOneWordGame.csproj",
       "warningLevel": 1,
-      "filePath": "C:\\Users\\dhary\\Music\\FourPicsOneWordGame(new)\\FourPicsOneWordGame\\FourPicsOneWordGame.csproj",
+      "filePath": "C:\\Users\\dhary\\Music\\WordPic\\FourPicsOneWordGame\\FourPicsOneWordGame\\FourPicsOneWordGame.csproj",
       "libraryId": "OpenTK",
       "targetGraphs": [
         "net8.0-windows7.0"
@@ -69,9 +69,9 @@
       "code": "NU1701",
       "level": "Warning",
       "message": "Package 'OpenTK.GLControl 3.1.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.",
-      "projectPath": "C:\\Users\\dhary\\Music\\FourPicsOneWordGame(new)\\FourPicsOneWordGame\\FourPicsOneWordGame.csproj",
+      "projectPath": "C:\\Users\\dhary\\Music\\WordPic\\FourPicsOneWordGame\\FourPicsOneWordGame\\FourPicsOneWordGame.csproj",
       "warningLevel": 1,
-      "filePath": "C:\\Users\\dhary\\Music\\FourPicsOneWordGame(new)\\FourPicsOneWordGame\\FourPicsOneWordGame.csproj",
+      "filePath": "C:\\Users\\dhary\\Music\\WordPic\\FourPicsOneWordGame\\FourPicsOneWordGame\\FourPicsOneWordGame.csproj",
       "libraryId": "OpenTK.GLControl",
       "targetGraphs": [
         "net8.0-windows7.0"
@@ -81,9 +81,9 @@
       "code": "NU1701",
       "level": "Warning",
       "message": "Package 'SkiaSharp.Views.WindowsForms 3.116.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0-windows7.0'. This package may not be fully compatible with your project.",
-      "projectPath": "C:\\Users\\dhary\\Music\\FourPicsOneWordGame(new)\\FourPicsOneWordGame\\FourPicsOneWordGame.csproj",
+      "projectPath": "C:\\Users\\dhary\\Music\\WordPic\\FourPicsOneWordGame\\FourPicsOneWordGame\\FourPicsOneWordGame.csproj",
       "warningLevel": 1,
-      "filePath": "C:\\Users\\dhary\\Music\\FourPicsOneWordGame(new)\\FourPicsOneWordGame\\FourPicsOneWordGame.csproj",
+      "filePath": "C:\\Users\\dhary\\Music\\WordPic\\FourPicsOneWordGame\\FourPicsOneWordGame\\FourPicsOneWordGame.csproj",
       "libraryId": "SkiaSharp.Views.WindowsForms",
       "targetGraphs": [
         "net8.0-windows7.0"

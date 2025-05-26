@@ -23,7 +23,6 @@ namespace FourPicsOneWordGame
             lblMessage.Text = "";
             lblMessage.ForeColor = Color.Red;
 
-            // Basic Validations
             if (string.IsNullOrWhiteSpace(username))
             {
                 lblMessage.Text = "Username cannot be empty.";
@@ -62,7 +61,6 @@ namespace FourPicsOneWordGame
                 {
                     await connection.OpenAsync();
 
-                    // Check if username already exists
                     string checkUserSql = "SELECT COUNT(*) FROM users WHERE Username = @username;";
                     using (var checkUserCmd = new MySqlCommand(checkUserSql, connection))
                     {
@@ -77,10 +75,8 @@ namespace FourPicsOneWordGame
                         }
                     }
 
-                    // If username is unique, hash the password
                     string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
 
-                    // Insert the new user
                     string insertUserSql = "INSERT INTO users (Username, PasswordHash, Role) VALUES (@username, @passwordHash, @role);";
                     using (var insertCmd = new MySqlCommand(insertUserSql, connection))
                     {
@@ -93,14 +89,8 @@ namespace FourPicsOneWordGame
                         if (rowsAffected > 0)
                         {
                             MessageBox.Show("Registration successful! You can now close this window and log in.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            // You might want to clear fields here too
-                            // txtUsername.Clear(); 
-                            // txtPassword.Clear();
-                            // txtConfirmPassword.Clear();
-                            // No need to set DialogResult if LoginForm is just waiting for it to close.
-                            // Or, you could set this.DialogResult = DialogResult.OK; for its own purposes if needed,
-                            // but LoginForm isn't checking it in this simplified Hide/Show model.
-                            this.Close(); // Simply close this form.
+                            
+                            this.Close();
                         }
                         else
                         {
@@ -128,17 +118,6 @@ namespace FourPicsOneWordGame
 
         private void RegistrationForm_Load(object sender, EventArgs e)
         {
-            // Set each label's parent to the PictureBox and make background transparent
-            //label1.Parent = pictureBox1;
-
-            //label2.Parent = pictureBox1;
-
-            //label3.Parent = pictureBox1;
-
-            //label4.Parent = pictureBox1;
-
-            //lblMessage.Parent = pictureBox1;
-            //lblMessage.BackColor = Color.Transparent;
         }
     }
 }

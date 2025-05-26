@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient; // For MySQL connectivity
+using MySql.Data.MySqlClient;
 
 namespace FourPicsOneWordGame
 {
@@ -18,7 +18,6 @@ namespace FourPicsOneWordGame
 
         private async void LeaderboardForm_Load(object sender, EventArgs e)
         {
-            // Set a title if you have a label for it (e.g., lblLeaderboardTitle)
             Control? titleLabel = this.Controls.Find("lblLeaderboardTitle", true).FirstOrDefault();
             if (titleLabel != null)
             {
@@ -27,19 +26,19 @@ namespace FourPicsOneWordGame
             await LoadLeaderboardAsync();
         }
 
-        private async void btnRefreshLeaderboard_Click(object sender, EventArgs e) // If you have this button
+        private async void btnRefreshLeaderboard_Click(object sender, EventArgs e)
         {
             await LoadLeaderboardAsync();
         }
 
-        private void btnCloseLeaderboard_Click(object sender, EventArgs e) // If you have this button
+        private void btnCloseLeaderboard_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
         private async Task LoadLeaderboardAsync()
         {
-            if (flpLeaderboardEntries == null) return; // Should not happen if designer is correct
+            if (flpLeaderboardEntries == null) return;
 
             flpLeaderboardEntries.Controls.Clear();
             List<Tuple<int, string, long>> leaderboardData = new List<Tuple<int, string, long>>();
@@ -80,29 +79,28 @@ namespace FourPicsOneWordGame
 
                 if (leaderboardData.Any())
                 {
-                    // --- Header Panel ---
                     Panel headerPanel = new Panel
                     {
                         Width = panelContentWidth,
                         Height = 30,
                         Margin = new Padding(3, 3, 3, 1),
-                        BackColor = Color.FromArgb(210, 210, 220) // Slightly different header color
+                        BackColor = Color.FromArgb(210, 210, 220)
                     };
 
                     Label lblHeaderScore = new Label
                     {
                         Text = "Score",
                         Dock = DockStyle.Right,
-                        Width = 70, // Fixed width for score header
+                        Width = 70,
                         TextAlign = ContentAlignment.MiddleRight,
                         Font = new Font("Segoe UI", 9F, FontStyle.Bold),
-                        Padding = new Padding(0, 0, 5, 0) // Padding for text within label
+                        Padding = new Padding(0, 0, 5, 0) 
                     };
                     Label lblHeaderRank = new Label
                     {
                         Text = "Rank",
                         Dock = DockStyle.Left,
-                        Width = 50, // Fixed width for rank header
+                        Width = 50,
                         TextAlign = ContentAlignment.MiddleLeft,
                         Font = new Font("Segoe UI", 9F, FontStyle.Bold),
                         Padding = new Padding(5, 0, 0, 0)
@@ -110,24 +108,23 @@ namespace FourPicsOneWordGame
                     Label lblHeaderUsername = new Label
                     {
                         Text = "Username",
-                        Dock = DockStyle.Fill, // Fills remaining space
+                        Dock = DockStyle.Fill,
                         TextAlign = ContentAlignment.MiddleLeft,
                         Font = new Font("Segoe UI", 9F, FontStyle.Bold),
                         Padding = new Padding(5, 0, 0, 0)
                     };
 
-                    headerPanel.Controls.Add(lblHeaderUsername); // Add Fill control first
+                    headerPanel.Controls.Add(lblHeaderUsername);
                     headerPanel.Controls.Add(lblHeaderRank);
                     headerPanel.Controls.Add(lblHeaderScore);
                     flpLeaderboardEntries.Controls.Add(headerPanel);
 
-                    // --- Data Entry Panels ---
                     foreach (var entry in leaderboardData)
                     {
                         Panel entryPanel = new Panel
                         {
                             Width = panelContentWidth,
-                            Height = 35, // Slightly shorter for data rows
+                            Height = 35,
                             Margin = new Padding(3, 0, 3, 3),
                             BorderStyle = BorderStyle.FixedSingle,
                             BackColor = (entry.Item1 % 2 == 0) ? Color.FromArgb(248, 248, 248) : Color.White
@@ -161,8 +158,7 @@ namespace FourPicsOneWordGame
                             Padding = new Padding(5, 0, 0, 0)
                         };
 
-                        // Order of adding controls when using Dock.Fill matters
-                        entryPanel.Controls.Add(lblUsername); // Add Fill control first
+                        entryPanel.Controls.Add(lblUsername); 
                         entryPanel.Controls.Add(lblRank);
                         entryPanel.Controls.Add(lblScore);
 

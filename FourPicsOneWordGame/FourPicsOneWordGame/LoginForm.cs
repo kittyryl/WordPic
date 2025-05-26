@@ -21,7 +21,6 @@ namespace FourPicsOneWordGame
             lblMessage.Text = "";
             lblMessage.ForeColor = Color.Red;
 
-            // Basic Validations
             if (string.IsNullOrEmpty(username))
             {
                 lblMessage.Text = "Username cannot be empty.";
@@ -66,14 +65,11 @@ namespace FourPicsOneWordGame
 
                 if (user != null)
                 {
-                    // User found, now verify the password using BCrypt
                     if (BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
                     {
-                        // Password is correct! Login successfully.
                         lblMessage.ForeColor = Color.Green;
                         MessageBox.Show($"Welcome {user.UserName}!\nRole: {user.Role}", "Login Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        // Store the logged-in user
                         CurrentUser.LoggedInUser = user;
 
                         this.DialogResult = DialogResult.OK;
@@ -81,13 +77,11 @@ namespace FourPicsOneWordGame
                     }
                     else
                     {
-                        // Password incorrect
                         lblMessage.Text = "Invalid username or password.";
                     }
                 }
                 else
                 {
-                    // User not found
                     lblMessage.Text = "Invalid username or password.";
                 }
             }
@@ -107,30 +101,16 @@ namespace FourPicsOneWordGame
         {
             RegistrationForm regForm = new RegistrationForm();
 
-            this.Hide(); // Hide the current LoginForm
+            this.Hide();
 
-            // Show the RegistrationForm as a dialog. This means LoginForm code execution
-            // will pause here until regForm is closed.
-            regForm.ShowDialog(this); // 'this' makes LoginForm the owner of regForm
+            regForm.ShowDialog(this);
 
-            // After regForm is closed (for any reason: successful registration, cancel, or 'X' button):
             this.Show();
         }
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
-            // Set each label's parent to the PictureBox and make background transparent
-            //label1.Parent = pictureBox1;
-            //label1.BackColor = Color.Transparent;
 
-            //label2.Parent = pictureBox1;
-            //label2.BackColor = Color.Transparent;
-
-            //label3.Parent = pictureBox1;
-            //label3.BackColor = Color.Transparent;
-
-            //lblMessage.Parent = pictureBox1;
-            //lblMessage.BackColor = Color.Transparent;
         }
     }
 }

@@ -2471,11 +2471,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\dhary\\Music\\FourPicsOneWordGame(new)\\FourPicsOneWordGame\\FourPicsOneWordGame.csproj",
+      "projectUniqueName": "C:\\Users\\dhary\\Music\\WordPic\\FourPicsOneWordGame\\FourPicsOneWordGame\\FourPicsOneWordGame.csproj",
       "projectName": "FourPicsOneWordGame",
-      "projectPath": "C:\\Users\\dhary\\Music\\FourPicsOneWordGame(new)\\FourPicsOneWordGame\\FourPicsOneWordGame.csproj",
+      "projectPath": "C:\\Users\\dhary\\Music\\WordPic\\FourPicsOneWordGame\\FourPicsOneWordGame\\FourPicsOneWordGame.csproj",
       "packagesPath": "C:\\Users\\dhary\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\dhary\\Music\\FourPicsOneWordGame(new)\\FourPicsOneWordGame\\obj\\",
+      "outputPath": "C:\\Users\\dhary\\Music\\WordPic\\FourPicsOneWordGame\\FourPicsOneWordGame\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

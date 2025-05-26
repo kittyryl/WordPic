@@ -56,14 +56,14 @@ namespace FourPicsOneWordGame
                     rtb.SelectionFont = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
                     rtb.AppendText("Wrong Guesses:\n");
                     rtb.SelectionFont = new System.Drawing.Font("Segoe UI", 10F);
-                    rtb.AppendText($"- You are allowed a maximum of {MAX_WRONG_GUESSES_PER_LEVEL} wrong guesses per level attempt.\n"); // Assuming MAX_WRONG_GUESSES_PER_LEVEL is accessible or you hardcode '2'
+                    rtb.AppendText($"- You are allowed a maximum of {MAX_WRONG_GUESSES_PER_LEVEL} wrong guesses per level attempt.\n"); 
                     rtb.AppendText("- If you exceed this limit, it's game over, and your overall progress will be reset.\n\n");
 
 
                     rtb.SelectionFont = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
                     rtb.AppendText("Hints:\n");
                     rtb.SelectionFont = new System.Drawing.Font("Segoe UI", 10F);
-                    rtb.AppendText($"- You can use up to {MAX_HINTS_PER_LEVEL} hints per level.\n"); // Assuming MAX_HINTS_PER_LEVEL is accessible or you hardcode '2'
+                    rtb.AppendText($"- You can use up to {MAX_HINTS_PER_LEVEL} hints per level.\n");
                     rtb.AppendText("  - Hint 1: Reveals one correct letter in its place.\n");
                     rtb.AppendText("  - Hint 2: Removes 3 incorrect letters from the letter bank.\n\n");
 
